@@ -27,5 +27,4 @@ public class BaseHandler extends Handler {
             callBack.handleMessage(msg);
         }
     }
-
 }

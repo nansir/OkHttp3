@@ -42,6 +42,4 @@ public class NetInfo {
             return false;
         }
     }
-
-
 }

@@ -22,12 +22,9 @@ public class BaseApplication extends Application {
         Log.d("BaseApplication","BaseApplication已初始化");
     }
 
-
     @Override
     public void onTerminate() {
         super.onTerminate();
     }
-
-
 
 }

@@ -11,8 +11,6 @@ import com.okhttplib.interceptor.ResultInterceptor;
  * @author zhousf
  */
 public class HttpInterceptor {
-
-
     /**
      * 请求结果统一预处理拦截器
      * 该拦截器会对所有网络请求返回结果进行预处理并修改
@@ -54,6 +52,9 @@ public class HttpInterceptor {
                     break;
                 case HttpInfo.ConnectionInterruption:
                     info.setRetDetail("连接中断："+result);
+                    break;
+                case HttpInfo.PermissionToExpire:
+                    info.setRetDetail("许可到期");
                     break;
             }
             return info;

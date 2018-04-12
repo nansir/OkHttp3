@@ -426,6 +426,7 @@ public class HttpInfo {
     public final static int GatewayBad = 13;
     public final static int ServerNotFound = 14;
     public final static int RequestParamError = 15;
+    public final static int PermissionToExpire = 16;
 
 
     public HttpInfo packInfo(int netCode,int retCode, String retDetail){
