@@ -8,7 +8,6 @@ package com.okhttp3.bean;
 
 public class TimeAndDate {
 
-
     /**
      * success : 1
      * result : {"timestamp":"1492413797","datetime_1":"2017-04-17 15:23:17","datetime_2":"2017年04月17日 15时23分17秒","week_1":"1","week_2":"星期一","week_3":"周一","week_4":"Monday"}
@@ -54,8 +53,8 @@ public class TimeAndDate {
 
         @Override
         public String toString() {
-            return "timestamp="+timestamp+",datetime_1="+datetime_1+",datetime_2="+datetime_2
-                    +"week_1="+week_1+",week_2="+week_2+",week_3="+week_3+",week_4="+week_4;
+            return "timestamp=" + timestamp + ",datetime_1=" + datetime_1 + ",datetime_2=" + datetime_2
+                    + "week_1=" + week_1 + ",week_2=" + week_2 + ",week_3=" + week_3 + ",week_4=" + week_4;
         }
 
         public String getTimestamp() {

@@ -33,11 +33,6 @@ public class WelcomeActivity extends BaseActivity {
     Button downloadPointBtn;
 
     @Override
-    protected int initLayout() {
-        return R.layout.activity_welcome;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //设置按钮圆角样式
@@ -52,6 +47,11 @@ public class WelcomeActivity extends BaseActivity {
                 .bind(uploadFileBtn)
                 .bind(downloadBtn)
                 .bind(downloadPointBtn);
+    }
+
+    @Override
+    protected int initLayout() {
+        return R.layout.activity_welcome;
     }
 
     @OnClick({R.id.httpBtn, R.id.uploadImgBtn, R.id.uploadFileBtn, R.id.downloadBtn, R.id.downloadPointBtn})

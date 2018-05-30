@@ -12,9 +12,9 @@ import android.widget.Toast;
 import com.okhttp3.R;
 import com.okhttp3.util.FilePathUtil;
 import com.okhttp3.util.LogUtil;
-import com.okhttplib.HttpInfo;
-import com.okhttplib.OkHttpUtil;
-import com.okhttplib.callback.ProgressCallback;
+import com.sir.library.okhttp.HttpInfo;
+import com.sir.library.okhttp.OkHttpUtil;
+import com.sir.library.okhttp.callback.ProgressCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,7 @@ import butterknife.OnClick;
 
 /**
  * 上传文件：支持批量上传、进度显示
+ *
  * @author zhousf
  */
 public class UploadFileActivity extends BaseActivity {
@@ -46,13 +47,13 @@ public class UploadFileActivity extends BaseActivity {
     private List<String> imgList = new ArrayList<>();
 
     @Override
-    protected int initLayout() {
-        return R.layout.activity_upload_file;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int initLayout() {
+        return R.layout.activity_upload_file;
     }
 
     @OnClick({R.id.chooseFileBtn, R.id.uploadFileBtn})
@@ -71,24 +72,24 @@ public class UploadFileActivity extends BaseActivity {
         }
     }
 
-    private void uploadFile(String path){
-        if(TextUtils.isEmpty(path)){
+    private void uploadFile(String path) {
+        if (TextUtils.isEmpty(path)) {
             Toast.makeText(this, "请选择上传文件！", Toast.LENGTH_LONG).show();
             return;
         }
         HttpInfo info = HttpInfo.Builder()
                 .setUrl(url)
-                .addUploadFile("uploadFile",path,new ProgressCallback(){
+                .addUploadFile("uploadFile", path, new ProgressCallback() {
                     @Override
+                    public void onResponseMain(String filePath, HttpInfo info) {
+                        tvResult.setText(info.getRetDetail());
+                    }                    @Override
                     public void onProgressMain(int percent, long bytesWritten, long contentLength, boolean done) {
                         uploadProgress.setProgress(percent);
                         LogUtil.d(TAG, "上传进度：" + percent);
                     }
 
-                    @Override
-                    public void onResponseMain(String filePath, HttpInfo info) {
-                        tvResult.setText(info.getRetDetail());
-                    }
+
                 })
                 .build();
         OkHttpUtil.getDefault(this).doUploadFileAsync(info);
@@ -97,22 +98,22 @@ public class UploadFileActivity extends BaseActivity {
     /**
      * 单次批量上传：一次请求上传多个文件
      */
-    private void doUploadBatch(){
+    private void doUploadBatch() {
         imgList.clear();
         imgList.add("/storage/emulated/0/okHttp_download/test.apk");
 //        imgList.add("/storage/emulated/0/okHttp_download/test.rar");
         HttpInfo.Builder builder = HttpInfo.Builder()
                 .setUrl(url);
         //循环添加上传文件
-        for (String path: imgList  ) {
+        for (String path : imgList) {
             //若服务器为php，接口文件参数名称后面追加"[]"表示数组，示例：builder.addUploadFile("uploadFile[]",path);
-            builder.addUploadFile("uploadFile",path);
+            builder.addUploadFile("uploadFile", path);
         }
         final HttpInfo info = builder.build();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                OkHttpUtil.getDefault(UploadFileActivity.this).doUploadFileSync(info,new ProgressCallback(){
+                OkHttpUtil.getDefault(UploadFileActivity.this).doUploadFileSync(info, new ProgressCallback() {
                     @Override
                     public void onProgressMain(int percent, long bytesWritten, long contentLength, boolean done) {
                         uploadProgress.setProgress(percent);
@@ -143,7 +144,6 @@ public class UploadFileActivity extends BaseActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 
 
 }

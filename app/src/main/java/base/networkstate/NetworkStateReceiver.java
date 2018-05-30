@@ -13,10 +13,10 @@ import java.util.LinkedList;
  * Author : zhousf
  * 静态注册：
  * <receiver android:name="core.networkstate.NetworkStateReceiver" >
- *  <intent-filter>
- *     <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
- *     <action android:name="android.gzcpc.conn.CONNECTIVITY_CHANGE" />
- *  </intent-filter>
+ * <intent-filter>
+ * <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+ * <action android:name="android.gzcpc.conn.CONNECTIVITY_CHANGE" />
+ * </intent-filter>
  * </receiver>
  * 动态注册：
  * registerNetworkStateReceive/unRegisterNetworkStateReceiver
@@ -28,48 +28,10 @@ import java.util.LinkedList;
  */
 public class NetworkStateReceiver extends BroadcastReceiver {
 
+    private final static String ANDROID_NET_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
     private static BroadcastReceiver broadcastReceiver;
     private static ArrayList<NetworkStateListener> networkStateListenerList = new ArrayList<NetworkStateListener>();
-    private final static String ANDROID_NET_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
     private static LinkedList<NetInfo> list = new LinkedList<>();
-
-
-    public static BroadcastReceiver getBroadcastReceiver(){
-        return broadcastReceiver == null ? broadcastReceiver = new NetworkStateReceiver() : broadcastReceiver;
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        if(broadcastReceiver == null)
-            broadcastReceiver = NetworkStateReceiver.this;
-        if (intent.getAction().equalsIgnoreCase(ANDROID_NET_CHANGE_ACTION)) {
-            boolean isNetworkAvailable = NetworkUtil.isNetworkAvailable(context);
-            String networkType = NetworkUtil.getNetworkType(context);
-            NetInfo netInfo  = new NetInfo(isNetworkAvailable,networkType);
-            if(!list.isEmpty()){
-                if(!list.getLast().equal(isNetworkAvailable,networkType)){
-                    list.add(netInfo);
-                    notifyListener(isNetworkAvailable,netInfo);
-                }
-            }else {
-                list.add(netInfo);
-                notifyListener(isNetworkAvailable,netInfo);
-            }
-        }
-    }
-
-
-    /**
-     * 通知网络状态监听器
-     */
-    private void notifyListener(boolean isNetworkAvailable,NetInfo netInfo) {
-        for (int i = 0; i < networkStateListenerList.size(); i++) {
-            final NetworkStateListener listener = networkStateListenerList.get(i);
-            if (null != listener) {
-                listener.onNetworkState(isNetworkAvailable, netInfo);
-            }
-        }
-    }
 
     /**
      * 添加网络状态监听
@@ -90,7 +52,6 @@ public class NetworkStateReceiver extends BroadcastReceiver {
         }
     }
 
-
     /**
      * 注册网络状态广播
      */
@@ -100,6 +61,9 @@ public class NetworkStateReceiver extends BroadcastReceiver {
         context.getApplicationContext().registerReceiver(getBroadcastReceiver(), filter);
     }
 
+    public static BroadcastReceiver getBroadcastReceiver() {
+        return broadcastReceiver == null ? broadcastReceiver = new NetworkStateReceiver() : broadcastReceiver;
+    }
 
     /**
      * 注销网络状态广播
@@ -114,5 +78,35 @@ public class NetworkStateReceiver extends BroadcastReceiver {
         }
     }
 
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (broadcastReceiver == null)
+            broadcastReceiver = NetworkStateReceiver.this;
+        if (intent.getAction().equalsIgnoreCase(ANDROID_NET_CHANGE_ACTION)) {
+            boolean isNetworkAvailable = NetworkUtil.isNetworkAvailable(context);
+            String networkType = NetworkUtil.getNetworkType(context);
+            NetInfo netInfo = new NetInfo(isNetworkAvailable, networkType);
+            if (!list.isEmpty()) {
+                if (!list.getLast().equal(isNetworkAvailable, networkType)) {
+                    list.add(netInfo);
+                    notifyListener(isNetworkAvailable, netInfo);
+                }
+            } else {
+                list.add(netInfo);
+                notifyListener(isNetworkAvailable, netInfo);
+            }
+        }
+    }
 
+    /**
+     * 通知网络状态监听器
+     */
+    private void notifyListener(boolean isNetworkAvailable, NetInfo netInfo) {
+        for (int i = 0; i < networkStateListenerList.size(); i++) {
+            final NetworkStateListener listener = networkStateListenerList.get(i);
+            if (null != listener) {
+                listener.onNetworkState(isNetworkAvailable, netInfo);
+            }
+        }
+    }
 }

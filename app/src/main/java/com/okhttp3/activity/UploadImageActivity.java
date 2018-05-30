@@ -14,9 +14,9 @@ import android.widget.Toast;
 import com.okhttp3.R;
 import com.okhttp3.util.FilePathUtil;
 import com.okhttp3.util.LogUtil;
-import com.okhttplib.HttpInfo;
-import com.okhttplib.OkHttpUtil;
-import com.okhttplib.callback.ProgressCallback;
+import com.sir.library.okhttp.HttpInfo;
+import com.sir.library.okhttp.OkHttpUtil;
+import com.sir.library.okhttp.callback.ProgressCallback;
 
 import java.io.IOException;
 
@@ -26,9 +26,12 @@ import butterknife.OnClick;
 
 /**
  * 上传图片：支持批量上传、进度显示
+ *
  * @author zhousf
  */
 public class UploadImageActivity extends BaseActivity {
+
+    private final String TAG = UploadImageActivity.class.getSimpleName();
 
     @Bind(R.id.uploadProgressOne)
     ProgressBar uploadProgressOne;
@@ -38,9 +41,6 @@ public class UploadImageActivity extends BaseActivity {
     ProgressBar uploadProgressTwo;
     @Bind(R.id.ivImageTwo)
     ImageView ivImageTwo;
-
-    private final String TAG = UploadImageActivity.class.getSimpleName();
-
     /**
      * 文件上传地址
      */
@@ -50,18 +50,17 @@ public class UploadImageActivity extends BaseActivity {
     private String filePathTwo;
 
     @Override
-    protected int initLayout() {
-        return R.layout.activity_upload_image;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    protected int initLayout() {
+        return R.layout.activity_upload_image;
+    }
 
-    @OnClick({R.id.uploadImgBtnOne, R.id.chooseImgBtnOne,R.id.uploadImgBtnTwo,
-            R.id.chooseImgBtnTwo,R.id.uploadImgBtnMulti})
+    @OnClick({R.id.uploadImgBtnOne, R.id.chooseImgBtnOne, R.id.uploadImgBtnTwo,
+            R.id.chooseImgBtnTwo, R.id.uploadImgBtnMulti})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.chooseImgBtnOne:
@@ -125,19 +124,21 @@ public class UploadImageActivity extends BaseActivity {
     private void uploadImgTwo() {
         HttpInfo info = HttpInfo.Builder()
                 .setUrl(url)
-                .addUploadFile("uploadFile", filePathTwo,new ProgressCallback() {
+                .addUploadFile("uploadFile", filePathTwo, new ProgressCallback() {
                     @Override
+                    public void onResponseMain(String filePath, HttpInfo info) {
+                        LogUtil.d(TAG, "上传结果2 Main：\n" + filePath + "\n" + info.getRetDetail());
+                    }                    @Override
                     public void onProgressMain(int percent, long bytesWritten, long contentLength, boolean done) {
                         uploadProgressTwo.setProgress(percent);
                         LogUtil.d(TAG, "上传进度2：" + percent);
                     }
-                    @Override
-                    public void onResponseMain(String filePath, HttpInfo info) {
-                        LogUtil.d(TAG, "上传结果2 Main：\n" + filePath+"\n"+info.getRetDetail());
-                    }
+
+
+
                     @Override
                     public void onResponseSync(String filePath, HttpInfo info) {
-                        LogUtil.d(TAG, "上传结果2 Sync：\n" + filePath+"\n"+info.getRetDetail());
+                        LogUtil.d(TAG, "上传结果2 Sync：\n" + filePath + "\n" + info.getRetDetail());
                     }
                 })
                 .build();
@@ -156,20 +157,22 @@ public class UploadImageActivity extends BaseActivity {
                         uploadProgressOne.setProgress(percent);
                         LogUtil.d(TAG, "上传进度1：" + percent);
                     }
+
                     @Override
                     public void onResponseMain(String filePath, HttpInfo info) {
-                        LogUtil.d(TAG, "上传结果1：\n" + filePath+"\n"+info.getRetDetail());
+                        LogUtil.d(TAG, "上传结果1：\n" + filePath + "\n" + info.getRetDetail());
                     }
                 })
-                .addUploadFile("file", filePathTwo,new ProgressCallback() {
+                .addUploadFile("file", filePathTwo, new ProgressCallback() {
                     @Override
                     public void onProgressMain(int percent, long bytesWritten, long contentLength, boolean done) {
                         uploadProgressTwo.setProgress(percent);
                         LogUtil.d(TAG, "上传进度2：" + percent);
                     }
+
                     @Override
                     public void onResponseMain(String filePath, HttpInfo info) {
-                        LogUtil.d(TAG, "上传结果2：\n" + filePath+"\n"+info.getRetDetail());
+                        LogUtil.d(TAG, "上传结果2：\n" + filePath + "\n" + info.getRetDetail());
                     }
 
                 })
@@ -180,7 +183,7 @@ public class UploadImageActivity extends BaseActivity {
     /**
      * 上传图片
      */
-    private void doUploadImg(final HttpInfo info){
+    private void doUploadImg(final HttpInfo info) {
         OkHttpUtil.getDefault(this).doUploadFileAsync(info);
     }
 
@@ -191,15 +194,15 @@ public class UploadImageActivity extends BaseActivity {
             String path = FilePathUtil.getFilePathFromUri(this, contentUri);
             if (TextUtils.isEmpty(path)) {
                 Toast.makeText(this, "获取图片地址失败", Toast.LENGTH_LONG).show();
-                return ;
+                return;
             }
-            if(requestCode == 1){
+            if (requestCode == 1) {
                 filePathOne = path;
             }
-            if(requestCode == 2){
+            if (requestCode == 2) {
                 filePathTwo = path;
             }
-            showImage(contentUri,requestCode);
+            showImage(contentUri, requestCode);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -207,15 +210,15 @@ public class UploadImageActivity extends BaseActivity {
     /**
      * 显示图片
      */
-    private void showImage(Uri contentUri,int what) {
+    private void showImage(Uri contentUri, int what) {
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), contentUri);
             if (null != bitmap) {
-                if(what == 1){
+                if (what == 1) {
                     ivImageOne.setImageBitmap(bitmap);
                     ivImageOne.setVisibility(View.VISIBLE);
                 }
-                if(what == 2){
+                if (what == 2) {
                     ivImageTwo.setImageBitmap(bitmap);
                     ivImageTwo.setVisibility(View.VISIBLE);
                 }

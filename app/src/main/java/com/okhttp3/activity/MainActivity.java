@@ -10,12 +10,12 @@ import com.okhttp3.bean.TimeAndDate;
 import com.okhttp3.util.LogUtil;
 import com.okhttp3.util.SelectorFactory;
 import com.okhttp3.util.ToastUtil;
-import com.okhttplib.HttpInfo;
-import com.okhttplib.OkHttpUtil;
-import com.okhttplib.annotation.CacheType;
-import com.okhttplib.annotation.Encoding;
-import com.okhttplib.annotation.RequestType;
-import com.okhttplib.callback.Callback;
+import com.sir.library.okhttp.HttpInfo;
+import com.sir.library.okhttp.OkHttpUtil;
+import com.sir.library.okhttp.annotation.CacheType;
+import com.sir.library.okhttp.annotation.Encoding;
+import com.sir.library.okhttp.annotation.RequestType;
+import com.sir.library.okhttp.callback.Callback;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -62,11 +62,6 @@ public class MainActivity extends BaseActivity {
     private boolean isNeedDeleteCache = true;
 
     @Override
-    protected int initLayout() {
-        return R.layout.activity_main;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //设置按钮圆角样式
@@ -84,6 +79,11 @@ public class MainActivity extends BaseActivity {
                 .bind(cacheThenNetworkBtn)
                 .bind(tenSecondCacheBtn)
                 .bind(deleteCacheBtn);
+    }
+
+    @Override
+    protected int initLayout() {
+        return R.layout.activity_main;
     }
 
     @Override
@@ -175,12 +175,6 @@ public class MainActivity extends BaseActivity {
                         .build(),
                 new Callback() {
                     @Override
-                    public void onFailure(HttpInfo info) throws IOException {
-                        String result = info.getRetDetail();
-                        resultTV.setText("异步请求失败：" + result);
-                    }
-
-                    @Override
                     public void onSuccess(HttpInfo info) throws IOException {
                         String result = info.getRetDetail();
                         resultTV.setText("异步请求成功：" + result);
@@ -188,7 +182,13 @@ public class MainActivity extends BaseActivity {
                         TimeAndDate time = info.getRetDetail(TimeAndDate.class);
                         LogUtil.d("MainActivity", time.getResult().toString());
                         setFromCacheTV(info);
+                    }                    @Override
+                    public void onFailure(HttpInfo info) throws IOException {
+                        String result = info.getRetDetail();
+                        resultTV.setText("异步请求失败：" + result);
                     }
+
+
                 });
         needDeleteCache(true);
     }
@@ -320,15 +320,6 @@ public class MainActivity extends BaseActivity {
                 );
     }
 
-
-    private void needDeleteCache(boolean delete) {
-        isNeedDeleteCache = delete;
-    }
-
-    private void setFromCacheTV(HttpInfo info) {
-        fromCacheTV.setText(info.isFromCache() ? "缓存请求" : "网络请求");
-    }
-
     /**
      * 清理缓存
      */
@@ -338,6 +329,14 @@ public class MainActivity extends BaseActivity {
         } else {
             ToastUtil.show(this, "清理缓存失败");
         }
+    }
+
+    private void setFromCacheTV(HttpInfo info) {
+        fromCacheTV.setText(info.isFromCache() ? "缓存请求" : "网络请求");
+    }
+
+    private void needDeleteCache(boolean delete) {
+        isNeedDeleteCache = delete;
     }
 
 

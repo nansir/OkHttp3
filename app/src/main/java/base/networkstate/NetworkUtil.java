@@ -12,12 +12,12 @@ public class NetworkUtil {
     /**
      * 网络是否可用
      */
-    public static boolean isNetworkAvailable(Context context){
+    public static boolean isNetworkAvailable(Context context) {
         if (context != null) {
             ConnectivityManager cm = (ConnectivityManager)
                     context.getSystemService(Context.CONNECTIVITY_SERVICE);
             final NetworkInfo network = cm.getActiveNetworkInfo();
-            if(network != null && network.getState() == NetworkInfo.State.CONNECTED){
+            if (network != null && network.getState() == NetworkInfo.State.CONNECTED) {
                 return true;
             }
         }
@@ -59,7 +59,7 @@ public class NetworkUtil {
     /**
      * 判断MOBILE网络是否可用
      */
-    public static boolean isMobileConnected(Context context){
+    public static boolean isMobileConnected(Context context) {
         if (context != null) {
             ConnectivityManager mConnectivityManager = (ConnectivityManager) context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -75,7 +75,7 @@ public class NetworkUtil {
     /**
      * 获取当前网络连接的类型信息
      */
-    public static int getNetworkTypeConnected(Context context){
+    public static int getNetworkTypeConnected(Context context) {
         if (context != null) {
             ConnectivityManager mConnectivityManager = (ConnectivityManager) context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -89,10 +89,9 @@ public class NetworkUtil {
     }
 
     /**
-     *
-     *获取当前的网络状态
+     * 获取当前的网络状态
      */
-    public static String getNetworkType(Context context){
+    public static String getNetworkType(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo network = cm.getActiveNetworkInfo();
@@ -107,9 +106,6 @@ public class NetworkUtil {
         return NetInfo.NONE_NET;
 
     }
-
-
-
 
 
 }

@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    compile project(':okhttp3')
+    compile project(':library_Okhttp')
 //    compile ('com.zhousf.lib:okhttp3:2.9.1.2'){
 //        exclude(module:'gson')
 //    }

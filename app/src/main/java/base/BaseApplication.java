@@ -5,6 +5,7 @@ import android.util.Log;
 
 /**
  * Application
+ *
  * @author zhousf
  */
 public class BaseApplication extends Application {
@@ -19,7 +20,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         baseApplication = this;
-        Log.d("BaseApplication","BaseApplication已初始化");
+        Log.d("BaseApplication", "BaseApplication已初始化");
     }
 
     @Override

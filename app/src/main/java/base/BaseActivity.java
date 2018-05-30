@@ -23,11 +23,13 @@ import butterknife.ButterKnife;
 
 /**
  * Activity基类：支持动态权限申请，网络状态监听
+ *
  * @author zhousf
  */
 public abstract class BaseActivity extends HttpActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback {
 
+    private static final int PERMISSION_REQUEST_CODE = 0;
     /**
      * 需要进行检测的权限数组
      */
@@ -38,18 +40,15 @@ public abstract class BaseActivity extends HttpActivity implements
             Manifest.permission.ACCESS_NETWORK_STATE,
             Manifest.permission.ACCESS_WIFI_STATE,
     };
-
-    private static final int PERMISSION_REQUEST_CODE = 0;
-
     /**
      * 判断是否需要检测，防止不停的弹框
      */
     private boolean isNeedCheck = true;
 
-    /** 网络状态监听器 **/
+    /**
+     * 网络状态监听器
+     **/
     private NetworkStateListener networkStateListener;
-
-    protected abstract int initLayout();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,23 +58,17 @@ public abstract class BaseActivity extends HttpActivity implements
         initNetworkStateListener();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(isNeedCheck){
-            checkPermissions(needPermissions);
-        }
-    }
+    protected abstract int initLayout();
 
     /**
      * 初始化网络状态监听器
      */
-    private void initNetworkStateListener(){
+    private void initNetworkStateListener() {
         NetworkStateReceiver.registerNetworkStateReceiver(this);
         networkStateListener = new NetworkStateListener() {
             @Override
             public void onNetworkState(boolean isNetworkAvailable, NetInfo netInfo) {
-                BaseActivity.this.onNetworkState(isNetworkAvailable,netInfo);
+                BaseActivity.this.onNetworkState(isNetworkAvailable, netInfo);
             }
         };
         //添加网络状态监听
@@ -84,12 +77,34 @@ public abstract class BaseActivity extends HttpActivity implements
 
     /**
      * 网络状态
+     *
      * @param isNetworkAvailable 网络是否可用
-     * @param netInfo 网络信息
+     * @param netInfo            网络信息
      */
-    public  void onNetworkState(boolean isNetworkAvailable, NetInfo netInfo){
+    public void onNetworkState(boolean isNetworkAvailable, NetInfo netInfo) {
 
-    };
+    }
+
+    @Override
+    protected void onDestroy() {
+        ButterKnife.unbind(this);
+        //移除网络状态监听
+        if (null != networkStateListener) {
+            NetworkStateReceiver.removeNetworkStateListener(networkStateListener);
+            NetworkStateReceiver.unRegisterNetworkStateReceiver(this);
+        }
+        super.onDestroy();
+    }
+
+    ;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isNeedCheck) {
+            checkPermissions(needPermissions);
+        }
+    }
 
     /**
      * 检测权限
@@ -98,13 +113,12 @@ public abstract class BaseActivity extends HttpActivity implements
         List<String> needRequestPermissionList = findDeniedPermissions(permissions);
         if (null != needRequestPermissionList && needRequestPermissionList.size() > 0) {
             ActivityCompat.requestPermissions(this,
-                    needRequestPermissionList.toArray(new String[needRequestPermissionList.size()]),PERMISSION_REQUEST_CODE);
+                    needRequestPermissionList.toArray(new String[needRequestPermissionList.size()]), PERMISSION_REQUEST_CODE);
         }
     }
 
     /**
      * 获取权限集中需要申请权限的列表
-     *
      */
     private List<String> findDeniedPermissions(String[] permissions) {
         List<String> needRequestPermissionList = new ArrayList<String>();
@@ -119,19 +133,6 @@ public abstract class BaseActivity extends HttpActivity implements
         return needRequestPermissionList;
     }
 
-    /**
-     * 检测是否所有的权限都已经授权
-     *
-     */
-    private boolean verifyPermissions(int[] grantResults) {
-        for (int result : grantResults) {
-            if (result != PackageManager.PERMISSION_GRANTED) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String[] permissions, int[] paramArrayOfInt) {
@@ -141,6 +142,18 @@ public abstract class BaseActivity extends HttpActivity implements
                 isNeedCheck = false;
             }
         }
+    }
+
+    /**
+     * 检测是否所有的权限都已经授权
+     */
+    private boolean verifyPermissions(int[] grantResults) {
+        for (int result : grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -171,24 +184,13 @@ public abstract class BaseActivity extends HttpActivity implements
     }
 
     /**
-     *  启动应用的设置
+     * 启动应用的设置
      */
     private void startAppSettings() {
         Intent intent = new Intent(
                 Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         intent.setData(Uri.parse("package:" + getPackageName()));
         startActivity(intent);
-    }
-
-    @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
-        //移除网络状态监听
-        if(null != networkStateListener) {
-            NetworkStateReceiver.removeNetworkStateListener(networkStateListener);
-            NetworkStateReceiver.unRegisterNetworkStateReceiver(this);
-        }
-        super.onDestroy();
     }
 
 }
