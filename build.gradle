@@ -2,9 +2,13 @@
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.0'
     }
     tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
 }
@@ -12,8 +16,12 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
-    def supportVersion = "26.0.0"
+    def supportVersion = "27.0.0"
 
     //版本控制
     ext {

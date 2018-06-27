@@ -53,8 +53,8 @@ public class BaseProvider extends ContentProvider {
                 .setDownloadFileDir(downloadFileDir)//文件下载保存目录
                 .setResponseEncoding(Encoding.UTF_8)//设置全局的服务器响应编码
                 .setRequestEncoding(Encoding.UTF_8)//设置全局的请求参数编码
-                .addResultInterceptor(HttpInterceptor.ResultInterceptor)//请求结果拦截器
-                .addExceptionInterceptor(HttpInterceptor.ExceptionInterceptor)//请求链路异常拦截器
+                .addResultInterceptor(HttpInterceptor.resultInterceptor)//请求结果拦截器
+                .addExceptionInterceptor(HttpInterceptor.exceptionInterceptor)//请求链路异常拦截器
                 .setCookieJar(new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context)))//持久化cookie
                 .build();
         Log.d("BaseProvider", "OkHttp已初始化");

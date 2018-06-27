@@ -16,7 +16,7 @@ public class HttpInterceptor {
      * 请求结果统一预处理拦截器
      * 该拦截器会对所有网络请求返回结果进行预处理并修改
      */
-    public static ResultInterceptor ResultInterceptor = new ResultInterceptor() {
+    public static ResultInterceptor resultInterceptor = new ResultInterceptor() {
         @Override
         public HttpInfo intercept(HttpInfo info) throws Exception {
             //请求结果预处理
@@ -28,7 +28,7 @@ public class HttpInterceptor {
      * 请求链路异常信息拦截器
      * 该拦截器会发送网络请求时链路异常信息进行拦截处理
      */
-    public static ExceptionInterceptor ExceptionInterceptor = new ExceptionInterceptor() {
+    public static ExceptionInterceptor exceptionInterceptor = new ExceptionInterceptor() {
         @Override
         public HttpInfo intercept(HttpInfo info) throws Exception {
             String result = info.getRetDetail();

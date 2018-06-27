@@ -314,8 +314,12 @@ class HttpHelper extends BaseHelper {
                     showLog("HttpStatus: " + netCode);
                     if (netCode == 400) {
                         return retInfo(info, netCode, HttpInfo.RequestParamError);
+                    } else if (netCode == 401) {//凭证无效并被拒绝
+                        return retInfo(info, netCode, HttpInfo.CredentialsRejected);
                     } else if (netCode == 404) {//请求页面路径错误
                         return retInfo(info, netCode, HttpInfo.ServerNotFound);
+                    } else if (netCode == 405) {//协议异常,方法不被允许GET,POST
+                        return retInfo(info, netCode, HttpInfo.ProtocolException);
                     } else if (netCode == 416) {//请求数据流范围错误
                         return retInfo(info, netCode, HttpInfo.Message, "请求Http数据流范围错误\n" + result);
                     } else if (netCode == 500) {//服务器内部错误
@@ -325,7 +329,7 @@ class HttpHelper extends BaseHelper {
                     } else if (netCode == 504) {//网关超时
                         return retInfo(info, netCode, HttpInfo.GatewayTimeOut);
                     } else {
-                        return retInfo(info, netCode, HttpInfo.CheckNet);
+                        return retInfo(info, netCode, HttpInfo.OtherExceptions);
                     }
                 }
             }

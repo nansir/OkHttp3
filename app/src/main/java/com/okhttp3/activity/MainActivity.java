@@ -198,8 +198,7 @@ public class MainActivity extends BaseActivity {
      */
     private void forceNetwork() {
         OkHttpUtil.Builder().setCacheType(CacheType.FORCE_NETWORK).build(this)
-                .doGetAsync(
-                        HttpInfo.Builder().setUrl(url).build(),
+                .doGetAsync( HttpInfo.Builder().setUrl(url).build(),
                         new Callback() {
                             @Override
                             public void onSuccess(HttpInfo info) throws IOException {

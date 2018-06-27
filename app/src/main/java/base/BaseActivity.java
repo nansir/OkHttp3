@@ -96,7 +96,7 @@ public abstract class BaseActivity extends HttpActivity implements
         super.onDestroy();
     }
 
-    ;
+
 
     @Override
     protected void onResume() {

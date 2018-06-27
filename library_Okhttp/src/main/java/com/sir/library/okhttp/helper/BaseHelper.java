@@ -228,8 +228,9 @@ abstract class BaseHelper {
      * @param msg 日志信息
      */
     void showLog(String msg) {
-        if (showHttpLog)
-            Log.d(TAG + "[" + timeStamp + "]", msg);
+        if (showHttpLog) {
+            Log.e(TAG + "[" + timeStamp + "]", msg);
+        }
     }
 
     /**

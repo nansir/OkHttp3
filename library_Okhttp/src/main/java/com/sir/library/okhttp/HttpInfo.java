@@ -41,6 +41,9 @@ public class HttpInfo {
     public final static int ServerNotFound = 14;
     public final static int RequestParamError = 15;
     public final static int PermissionToExpire = 16;
+    public final static int CredentialsRejected = 17;
+    public final static int OtherExceptions = 18;
+
     //**请求参数定义**/
     private String url;
     private Map<String, String> params;
@@ -122,20 +125,25 @@ public class HttpInfo {
             case NetworkOnMainThreadException:
                 this.retDetail = "不允许在UI线程中进行网络操作";
                 break;
-            case Message:
-                this.retDetail = "";
+            case CredentialsRejected:
+                this.retDetail = "凭据无效被拒绝";
                 break;
+            case Message:
+                this.retDetail = "请求的范围无法满足";
+                break;
+            case OtherExceptions:
+                this.retDetail = "其他异常";
             case GatewayTimeOut:
-                this.retDetail = "缓存不存在或网关超时，请检查网络连接是否正常";
+                this.retDetail = "缓存不存在或网关超时,请检查网络连接是否正常";
                 break;
             case GatewayBad:
-                this.retDetail = "错误的网关，请检查请求链路";
+                this.retDetail = "错误的网关,请检查请求链路";
                 break;
             case ServerNotFound:
-                this.retDetail = "服务器找不到请求页面（页面已被移除）";
+                this.retDetail = "服务器找不到请求页面";
                 break;
             case RequestParamError:
-                this.retDetail = "请求参数错误，请检查请求参数是否正确";
+                this.retDetail = "请求参数错误,请检查请求参数是否正确";
                 break;
         }
         if (!TextUtils.isEmpty(retDetail)) {
@@ -362,7 +370,7 @@ public class HttpInfo {
         /**
          * 添加接口参数（文件）
          * 请采用POST请求方式
-         * 该方法可上传文件，建议上传文件采用标准方法：addUploadFile
+         * 该方法可上传文件,建议上传文件采用标准方法：addUploadFile
          * MediaType.parse("text/x-markdown; charset=utf-8")
          *
          * @param file 上传文件
