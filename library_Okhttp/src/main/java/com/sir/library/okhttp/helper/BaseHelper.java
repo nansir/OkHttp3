@@ -151,9 +151,6 @@ abstract class BaseHelper {
 
     };
 
-    BaseHelper() {
-    }
-
     BaseHelper(HelperInfo helperInfo) {
         this.helperInfo = helperInfo;
         this.httpInfo = helperInfo.getHttpInfo();
@@ -229,7 +226,7 @@ abstract class BaseHelper {
      */
     void showLog(String msg) {
         if (showHttpLog) {
-            Log.e(TAG + "[" + timeStamp + "]", msg);
+            Log.i(TAG, msg);
         }
     }
 

@@ -89,6 +89,49 @@ public class OkHttpUtil implements OkHttpUtilInterface {
     }
 
     /**
+     * 封装业务类信息
+     */
+    private HelperInfo packageHelperInfo() {
+        HelperInfo helperInfo = new HelperInfo();
+        helperInfo.setShowHttpLog(builder.showHttpLog);
+        helperInfo.setRequestTag(builder.requestTag);
+        int random = 1000 + (int) (Math.random() * 999);
+        String timeStamp = System.currentTimeMillis() + "_" + random;
+        helperInfo.setTimeStamp(timeStamp);
+        helperInfo.setExceptionInterceptors(builder.exceptionInterceptors);
+        helperInfo.setResultInterceptors(builder.resultInterceptors);
+        helperInfo.setDownloadFileDir(builder.downloadFileDir);
+        helperInfo.setClientBuilder(newBuilderFromCopy());
+        helperInfo.setOkHttpUtil(this);
+        helperInfo.setDefault(builder.isDefault);
+        helperInfo.setLogTAG(builder.httpLogTAG == null ? TAG : builder.httpLogTAG);
+        helperInfo.setResponseEncoding(builder.responseEncoding);
+        helperInfo.setRequestEncoding(builder.requestEncoding);
+        helperInfo.setCacheSurvivalTime(cacheSurvivalTime);
+        helperInfo.setCacheType(cacheType);
+        helperInfo.setGzip(builder.isGzip);
+        return helperInfo;
+    }
+
+    private OkHttpClient.Builder newBuilderFromCopy() {
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
+                .connectTimeout(builder.connectTimeout, TimeUnit.SECONDS)
+                .readTimeout(builder.readTimeout, TimeUnit.SECONDS)
+                .writeTimeout(builder.writeTimeout, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(builder.retryOnConnectionFailure);
+        if (builder.cachedDir != null) {
+            clientBuilder.cache(new Cache(builder.cachedDir, builder.maxCacheSize));
+        }
+        if (null != builder.networkInterceptors && !builder.networkInterceptors.isEmpty())
+            clientBuilder.networkInterceptors().addAll(builder.networkInterceptors);
+        if (null != builder.interceptors && !builder.interceptors.isEmpty())
+            clientBuilder.interceptors().addAll(builder.interceptors);
+        if (null != builder.cookieJar)
+            clientBuilder.cookieJar(builder.cookieJar);
+        return clientBuilder;
+    }
+
+    /**
      * 初始化：请在Application中调用
      *
      * @param context 上下文
@@ -533,49 +576,6 @@ public class OkHttpUtil implements OkHttpUtilInterface {
         return requestTag;
     }
 
-    /**
-     * 封装业务类信息
-     */
-    private HelperInfo packageHelperInfo() {
-        HelperInfo helperInfo = new HelperInfo();
-        helperInfo.setShowHttpLog(builder.showHttpLog);
-        helperInfo.setRequestTag(builder.requestTag);
-        int random = 1000 + (int) (Math.random() * 999);
-        String timeStamp = System.currentTimeMillis() + "_" + random;
-        helperInfo.setTimeStamp(timeStamp);
-        helperInfo.setExceptionInterceptors(builder.exceptionInterceptors);
-        helperInfo.setResultInterceptors(builder.resultInterceptors);
-        helperInfo.setDownloadFileDir(builder.downloadFileDir);
-        helperInfo.setClientBuilder(newBuilderFromCopy());
-        helperInfo.setOkHttpUtil(this);
-        helperInfo.setDefault(builder.isDefault);
-        helperInfo.setLogTAG(builder.httpLogTAG == null ? TAG : builder.httpLogTAG);
-        helperInfo.setResponseEncoding(builder.responseEncoding);
-        helperInfo.setRequestEncoding(builder.requestEncoding);
-        helperInfo.setCacheSurvivalTime(cacheSurvivalTime);
-        helperInfo.setCacheType(cacheType);
-        helperInfo.setGzip(builder.isGzip);
-        return helperInfo;
-    }
-
-    private OkHttpClient.Builder newBuilderFromCopy() {
-        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-                .connectTimeout(builder.connectTimeout, TimeUnit.SECONDS)
-                .readTimeout(builder.readTimeout, TimeUnit.SECONDS)
-                .writeTimeout(builder.writeTimeout, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(builder.retryOnConnectionFailure);
-        if (builder.cachedDir != null) {
-            clientBuilder.cache(new Cache(builder.cachedDir, builder.maxCacheSize));
-        }
-        if (null != builder.networkInterceptors && !builder.networkInterceptors.isEmpty())
-            clientBuilder.networkInterceptors().addAll(builder.networkInterceptors);
-        if (null != builder.interceptors && !builder.interceptors.isEmpty())
-            clientBuilder.interceptors().addAll(builder.interceptors);
-        if (null != builder.cookieJar)
-            clientBuilder.cookieJar(builder.cookieJar);
-        return clientBuilder;
-    }
-
     public boolean isNetworkAvailable() {
         if (context == null)
             return true;
@@ -857,6 +857,4 @@ public class OkHttpUtil implements OkHttpUtilInterface {
             return this;
         }
     }
-
-
 }

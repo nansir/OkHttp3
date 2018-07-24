@@ -182,7 +182,9 @@ public class MainActivity extends BaseActivity {
                         TimeAndDate time = info.getRetDetail(TimeAndDate.class);
                         LogUtil.d("MainActivity", time.getResult().toString());
                         setFromCacheTV(info);
-                    }                    @Override
+                    }
+
+                    @Override
                     public void onFailure(HttpInfo info) throws IOException {
                         String result = info.getRetDetail();
                         resultTV.setText("异步请求失败：" + result);
@@ -198,7 +200,7 @@ public class MainActivity extends BaseActivity {
      */
     private void forceNetwork() {
         OkHttpUtil.Builder().setCacheType(CacheType.FORCE_NETWORK).build(this)
-                .doGetAsync( HttpInfo.Builder().setUrl(url).build(),
+                .doGetAsync(HttpInfo.Builder().setUrl(url).build(),
                         new Callback() {
                             @Override
                             public void onSuccess(HttpInfo info) throws IOException {

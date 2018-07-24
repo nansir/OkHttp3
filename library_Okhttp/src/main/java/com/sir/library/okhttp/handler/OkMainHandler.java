@@ -11,7 +11,6 @@ import com.sir.library.okhttp.bean.ProgressMessage;
 import com.sir.library.okhttp.bean.UploadMessage;
 import com.sir.library.okhttp.callback.BaseActivityLifecycleCallbacks;
 import com.sir.library.okhttp.callback.BaseCallback;
-import com.sir.library.okhttp.callback.CallbackOk;
 
 import okhttp3.Call;
 
@@ -67,9 +66,7 @@ public class OkMainHandler extends Handler {
                         requestTag = callMsg.requestTag;
                         if (!BaseActivityLifecycleCallbacks.isActivityDestroyed(callMsg.requestTag)) {
                             BaseCallback callback = callMsg.callback;
-                            if (callback instanceof CallbackOk) {
-                                ((CallbackOk) callback).onResponse(callMsg.info);
-                            } else if (callback instanceof com.sir.library.okhttp.callback.Callback) {
+                            if (callback instanceof com.sir.library.okhttp.callback.Callback) {
                                 HttpInfo info = callMsg.info;
                                 if (info.isSuccessful()) {
                                     ((com.sir.library.okhttp.callback.Callback) callback).onSuccess(info);

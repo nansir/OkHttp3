@@ -56,6 +56,4 @@ public class ProgressCallback extends ProgressCallbackAbs {
     public void onProgressMain(int percent, long bytesWritten, long contentLength, boolean done) {
 
     }
-
-
 }

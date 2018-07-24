@@ -57,7 +57,7 @@ public class BaseProvider extends ContentProvider {
                 .addExceptionInterceptor(HttpInterceptor.exceptionInterceptor)//请求链路异常拦截器
                 .setCookieJar(new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context)))//持久化cookie
                 .build();
-        Log.d("BaseProvider", "OkHttp已初始化");
+        Log.i("BaseProvider", "OkHttp已初始化");
     }
 
 

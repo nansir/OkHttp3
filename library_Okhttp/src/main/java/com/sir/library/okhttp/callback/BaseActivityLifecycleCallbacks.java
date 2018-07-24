@@ -47,15 +47,13 @@ public class BaseActivityLifecycleCallbacks implements Application.ActivityLifec
             callsMap.put(tag, callList);
             showLog(false, tag);
         }
-
     }
 
     private static void showLog(boolean isCancel, String tag) {
-        if (!showLifecycleLog) {
-            return;
+        if (showLifecycleLog) {
+            String callDetail = isCancel ? "取消请求" : "增加请求";
+            Log.i(TAG, callDetail + ": " + tag);
         }
-        String callDetail = isCancel ? "取消请求" : "增加请求";
-        Log.d(TAG, callDetail + ": " + tag);
     }
 
     /**
@@ -105,8 +103,6 @@ public class BaseActivityLifecycleCallbacks implements Application.ActivityLifec
                 if (null != c && !c.isCanceled())
                     c.cancel();
                 callList.delete(originalCall.hashCode());
-//                if(callList.size() == 0)
-//                    callsMap.remove(tag);
                 showLog(true, tag);
             }
         } else {
@@ -169,8 +165,9 @@ public class BaseActivityLifecycleCallbacks implements Application.ActivityLifec
      * @param tag 请求标识
      */
     private static void cancelCallByActivityDestroy(String tag) {
-        if (null == tag)
+        if (null == tag) {
             return;
+        }
         SparseArray<Call> callList = callsMap.get(tag);
         if (null != callList) {
             final int len = callList.size();
