@@ -7,7 +7,7 @@ import android.os.Message;
 /**
  * 通用句柄
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class BaseHandler extends Handler {
 

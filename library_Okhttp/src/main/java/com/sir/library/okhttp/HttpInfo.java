@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Http请求实体类
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class HttpInfo {
 

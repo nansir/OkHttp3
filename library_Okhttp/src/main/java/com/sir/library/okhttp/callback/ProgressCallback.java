@@ -4,10 +4,9 @@ import com.sir.library.okhttp.HttpInfo;
 
 /**
  * 进度回调
- *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
-public class ProgressCallback extends ProgressCallbackAbs {
+public class ProgressCallback extends BaseProgressCallback {
 
     /**
      * 异步UI线程：返回请求结果

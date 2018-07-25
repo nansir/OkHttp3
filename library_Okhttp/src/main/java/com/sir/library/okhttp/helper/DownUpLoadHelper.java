@@ -35,8 +35,7 @@ import okhttp3.ResponseBody;
 
 /**
  * 上传/下载业务类
- *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 class DownUpLoadHelper extends BaseHelper {
 

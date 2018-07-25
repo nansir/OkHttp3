@@ -20,11 +20,12 @@ import base.networkstate.NetInfo;
 import base.networkstate.NetworkStateListener;
 import base.networkstate.NetworkStateReceiver;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Activity基类：支持动态权限申请，网络状态监听
- *
- * @author zhousf
+ * <p>
+ * Created by zhuyinan on 2017/7/7.
  */
 public abstract class BaseActivity extends HttpActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback {
@@ -40,6 +41,7 @@ public abstract class BaseActivity extends HttpActivity implements
             Manifest.permission.ACCESS_NETWORK_STATE,
             Manifest.permission.ACCESS_WIFI_STATE,
     };
+    private Unbinder unbinder;
     /**
      * 判断是否需要检测，防止不停的弹框
      */
@@ -54,7 +56,7 @@ public abstract class BaseActivity extends HttpActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(initLayout());
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         initNetworkStateListener();
     }
 
@@ -87,7 +89,7 @@ public abstract class BaseActivity extends HttpActivity implements
 
     @Override
     protected void onDestroy() {
-        ButterKnife.unbind(this);
+        unbinder.unbind();
         //移除网络状态监听
         if (null != networkStateListener) {
             NetworkStateReceiver.removeNetworkStateListener(networkStateListener);
@@ -95,7 +97,6 @@ public abstract class BaseActivity extends HttpActivity implements
         }
         super.onDestroy();
     }
-
 
 
     @Override

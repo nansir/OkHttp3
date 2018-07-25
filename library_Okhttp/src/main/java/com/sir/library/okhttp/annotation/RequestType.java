@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * 请求方式
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 @IntDef({RequestType.POST, RequestType.GET, RequestType.PUT, RequestType.DELETE})
 @Retention(RetentionPolicy.SOURCE)

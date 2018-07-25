@@ -15,21 +15,21 @@ import com.sir.library.okhttp.bean.DownloadFileInfo;
 import com.sir.library.okhttp.callback.ProgressCallback;
 
 import base.BaseActivity;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
  * 文件下载：支持断点下载、进度显示
- *
- * @author zhousf
+ * <p>
+ * Created by zhuyinan on 2017/7/7.
  */
 public class DownloadBreakpointsActivity extends BaseActivity {
 
     private final String TAG = DownloadBreakpointsActivity.class.getSimpleName();
 
-    @Bind(R.id.downloadProgress)
+    @BindView(R.id.downloadProgress)
     ProgressBar downloadProgress;
-    @Bind(R.id.tvResult)
+    @BindView(R.id.tvResult)
     TextView tvResult;
 
     private DownloadFileInfo fileInfo;

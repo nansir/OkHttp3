@@ -15,7 +15,7 @@ import okhttp3.Call;
 /**
  * Activity声明周期回调
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class BaseActivityLifecycleCallbacks implements Application.ActivityLifecycleCallbacks {
 

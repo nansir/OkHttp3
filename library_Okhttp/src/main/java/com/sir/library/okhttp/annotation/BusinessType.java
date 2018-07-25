@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * 业务类型
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 @IntDef({BusinessType.HttpOrHttps, BusinessType.UploadFile, BusinessType.DownloadFile})
 @Retention(RetentionPolicy.SOURCE)

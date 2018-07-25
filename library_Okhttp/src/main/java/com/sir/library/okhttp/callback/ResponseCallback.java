@@ -6,11 +6,9 @@ import java.io.IOException;
 
 /**
  * 异步请求回调接口
- *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
-public interface Callback extends BaseCallback {
-
+public interface ResponseCallback extends BaseCallback {
     /**
      * 请求成功：该回调方法已切换到UI线程
      */

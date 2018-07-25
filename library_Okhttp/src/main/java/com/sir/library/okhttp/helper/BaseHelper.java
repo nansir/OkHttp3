@@ -33,8 +33,7 @@ import okio.Okio;
 
 /**
  * 业务操作基类：日志拦截与打印、Https验证
- *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 abstract class BaseHelper {
 
@@ -224,7 +223,7 @@ abstract class BaseHelper {
      *
      * @param msg 日志信息
      */
-    void showLog(String msg) {
+     void showLog(String msg) {
         if (showHttpLog) {
             Log.i(TAG, msg);
         }

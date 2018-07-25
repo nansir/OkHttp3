@@ -5,8 +5,7 @@ import com.sir.library.okhttp.callback.ProgressCallback;
 
 /**
  * 下载文件信息体
- *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class DownloadFileInfo {
 
@@ -88,7 +87,6 @@ public class DownloadFileInfo {
         this.completedSize = completedSize;
     }
 
-
     public String getSaveFileNameWithExtension() {
         return saveFileNameWithExtension;
     }
@@ -112,5 +110,4 @@ public class DownloadFileInfo {
     public void setSaveFileNameEncrypt(String saveFileNameEncrypt) {
         this.saveFileNameEncrypt = saveFileNameEncrypt;
     }
-
 }

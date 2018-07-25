@@ -6,8 +6,7 @@ import java.io.Serializable;
 
 /**
  * Handler信息体基类
- *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class OkMessage implements Serializable {
 

@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * 缓存类型
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 @IntDef({CacheType.FORCE_NETWORK, CacheType.FORCE_CACHE, CacheType.NETWORK_THEN_CACHE, CacheType.CACHE_THEN_NETWORK})
 @Retention(RetentionPolicy.SOURCE)

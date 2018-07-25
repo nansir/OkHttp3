@@ -4,10 +4,9 @@ import com.sir.library.okhttp.HttpInfo;
 
 /**
  * 进度回调抽象类
- *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
-public abstract class ProgressCallbackAbs {
+public abstract class BaseProgressCallback {
 
     public abstract void onResponseMain(String filePath, HttpInfo info);
 

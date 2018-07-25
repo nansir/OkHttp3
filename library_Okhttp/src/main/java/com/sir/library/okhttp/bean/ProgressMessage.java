@@ -5,7 +5,7 @@ import com.sir.library.okhttp.callback.ProgressCallback;
 /**
  * 上传/下载进度回调信息体
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class ProgressMessage extends OkMessage {
 

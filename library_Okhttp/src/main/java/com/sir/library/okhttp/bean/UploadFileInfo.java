@@ -5,7 +5,7 @@ import com.sir.library.okhttp.callback.ProgressCallback;
 /**
  * 上传文件信息体
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class UploadFileInfo {
 

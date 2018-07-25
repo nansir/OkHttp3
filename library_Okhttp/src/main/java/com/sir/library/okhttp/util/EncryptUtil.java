@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
  * 加密工具类
  * 支持MD5加密、文件的MD5校验码获取
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class EncryptUtil {
 

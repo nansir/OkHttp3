@@ -12,7 +12,7 @@ import android.provider.MediaStore;
 /**
  * 获取文件路径工具类
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class FilePathUtil {
 

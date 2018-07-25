@@ -7,8 +7,7 @@ import okhttp3.OkHttpClient;
 
 /**
  * 网络请求工具接口
- *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public interface OkHttpUtilInterface {
 

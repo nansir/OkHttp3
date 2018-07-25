@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * 互联网常见编码格式或规范
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 @StringDef({
         Encoding.ISO_8859_1,

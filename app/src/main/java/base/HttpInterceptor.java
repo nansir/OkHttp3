@@ -9,7 +9,7 @@ import com.sir.library.okhttp.interceptor.ResultInterceptor;
  * 1、请求结果统一预处理拦截器
  * 2、请求链路异常信息拦截器
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class HttpInterceptor {
     /**

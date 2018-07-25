@@ -20,8 +20,7 @@ import okio.Source;
 
 /**
  * 进度响应体
- *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class ProgressResponseBody extends ResponseBody {
 

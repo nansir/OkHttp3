@@ -12,7 +12,7 @@ import android.widget.Toast;
 /**
  * Toast辅助类，避免重复显示
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class ToastUtil {
 

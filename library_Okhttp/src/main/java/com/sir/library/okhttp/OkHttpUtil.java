@@ -55,9 +55,7 @@ import static com.sir.library.okhttp.annotation.CacheType.FORCE_NETWORK;
  * 支持请求结果拦截以及异常处理拦截
  * 支持单例客户端，提高网络请求速率
  * <p>
- * 引入版本com.squareup.okhttp3:okhttp:3.7.0
- *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class OkHttpUtil implements OkHttpUtilInterface {
 

@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * 内容类型
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 @StringDef({
         ContentType.FORM,

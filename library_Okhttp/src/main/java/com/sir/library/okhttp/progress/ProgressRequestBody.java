@@ -18,8 +18,7 @@ import okio.Sink;
 
 /**
  * 进度请求体
- *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class ProgressRequestBody extends RequestBody {
 

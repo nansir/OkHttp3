@@ -8,7 +8,7 @@ import okhttp3.Call;
 /**
  * 响应回调信息体
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class CallbackMessage extends OkMessage {
 

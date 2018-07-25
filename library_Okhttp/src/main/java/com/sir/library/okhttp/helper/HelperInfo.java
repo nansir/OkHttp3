@@ -13,7 +13,7 @@ import okhttp3.OkHttpClient;
 
 /**
  * 业务类信息体
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class HelperInfo {
 

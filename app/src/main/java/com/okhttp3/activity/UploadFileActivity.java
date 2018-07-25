@@ -20,23 +20,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import base.BaseActivity;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
  * 上传文件：支持批量上传、进度显示
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class UploadFileActivity extends BaseActivity {
 
     private final String TAG = UploadFileActivity.class.getSimpleName();
 
-    @Bind(R.id.uploadProgress)
+    @BindView(R.id.uploadProgress)
     ProgressBar uploadProgress;
-    @Bind(R.id.tvResult)
+    @BindView(R.id.tvResult)
     TextView tvResult;
-    @Bind(R.id.tvFile)
+    @BindView(R.id.tvFile)
     TextView tvFile;
 
     /**

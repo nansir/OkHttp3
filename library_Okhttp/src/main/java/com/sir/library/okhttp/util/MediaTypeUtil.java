@@ -9,7 +9,7 @@ import okhttp3.MediaType;
 /**
  * 媒体类型工具类
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class MediaTypeUtil {
 

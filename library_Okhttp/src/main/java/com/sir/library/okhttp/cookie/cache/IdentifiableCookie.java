@@ -28,7 +28,7 @@ import okhttp3.Cookie;
  * <p>
  * This new behaviour will be useful in determining when an already existing cookie in session must be overwritten.
  */
-class IdentifiableCookie {
+public class IdentifiableCookie {
 
     private Cookie cookie;
 

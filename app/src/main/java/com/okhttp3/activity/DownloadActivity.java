@@ -12,21 +12,21 @@ import com.sir.library.okhttp.OkHttpUtil;
 import com.sir.library.okhttp.callback.ProgressCallback;
 
 import base.BaseActivity;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
  * 文件下载：支持批量下载、进度显示
- *
- * @author zhousf
+ * <p>
+ * Created by zhuyinan on 2017/7/7.
  */
 public class DownloadActivity extends BaseActivity {
 
     private final String TAG = DownloadActivity.class.getSimpleName();
     private final String requestTag = "download-tag-1001";//请求标识
-    @Bind(R.id.tvResult)
+    @BindView(R.id.tvResult)
     TextView tvResult;
-    @Bind(R.id.downloadProgress)
+    @BindView(R.id.downloadProgress)
     ProgressBar downloadProgress;
     /**
      * 文件网络地址

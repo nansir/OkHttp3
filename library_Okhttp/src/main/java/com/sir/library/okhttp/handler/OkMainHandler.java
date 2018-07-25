@@ -11,13 +11,14 @@ import com.sir.library.okhttp.bean.ProgressMessage;
 import com.sir.library.okhttp.bean.UploadMessage;
 import com.sir.library.okhttp.callback.BaseActivityLifecycleCallbacks;
 import com.sir.library.okhttp.callback.BaseCallback;
+import com.sir.library.okhttp.callback.ResponseCallback;
 
 import okhttp3.Call;
 
 /**
  * 主线程Handler
- *
- * @author zhousf
+ * <p>
+ * Created by zhuyinan on 2017/7/7.
  */
 public class OkMainHandler extends Handler {
 
@@ -46,8 +47,9 @@ public class OkMainHandler extends Handler {
     public static OkMainHandler getInstance() {
         if (null == singleton) {
             synchronized (OkMainHandler.class) {
-                if (null == singleton)
+                if (null == singleton) {
                     singleton = new OkMainHandler();
+                }
             }
         }
         return singleton;
@@ -66,12 +68,12 @@ public class OkMainHandler extends Handler {
                         requestTag = callMsg.requestTag;
                         if (!BaseActivityLifecycleCallbacks.isActivityDestroyed(callMsg.requestTag)) {
                             BaseCallback callback = callMsg.callback;
-                            if (callback instanceof com.sir.library.okhttp.callback.Callback) {
+                            if (callback instanceof ResponseCallback) {
                                 HttpInfo info = callMsg.info;
                                 if (info.isSuccessful()) {
-                                    ((com.sir.library.okhttp.callback.Callback) callback).onSuccess(info);
+                                    ((ResponseCallback) callback).onSuccess(info);
                                 } else {
-                                    ((com.sir.library.okhttp.callback.Callback) callback).onFailure(info);
+                                    ((ResponseCallback) callback).onFailure(info);
                                 }
                             }
                         }

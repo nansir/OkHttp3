@@ -5,7 +5,7 @@ import com.sir.library.okhttp.HttpInfo;
 /**
  * 请求结果拦截器
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public interface ResultInterceptor {
 

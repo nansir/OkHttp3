@@ -21,25 +21,25 @@ import com.sir.library.okhttp.callback.ProgressCallback;
 import java.io.IOException;
 
 import base.BaseActivity;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
  * 上传图片：支持批量上传、进度显示
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class UploadImageActivity extends BaseActivity {
 
     private final String TAG = UploadImageActivity.class.getSimpleName();
 
-    @Bind(R.id.uploadProgressOne)
+    @BindView(R.id.uploadProgressOne)
     ProgressBar uploadProgressOne;
-    @Bind(R.id.ivImageOne)
+    @BindView(R.id.ivImageOne)
     ImageView ivImageOne;
-    @Bind(R.id.uploadProgressTwo)
+    @BindView(R.id.uploadProgressTwo)
     ProgressBar uploadProgressTwo;
-    @Bind(R.id.ivImageTwo)
+    @BindView(R.id.ivImageTwo)
     ImageView ivImageTwo;
     /**
      * 文件上传地址

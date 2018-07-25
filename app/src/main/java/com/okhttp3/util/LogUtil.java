@@ -5,7 +5,7 @@ import android.util.Log;
 /**
  * 日志打印
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class LogUtil {
 

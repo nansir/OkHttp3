@@ -45,8 +45,7 @@ import static com.sir.library.okhttp.HttpInfo.WriteAndReadTimeOut;
 
 /**
  * Http网络请求业务类
- *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 class HttpHelper extends BaseHelper {
 

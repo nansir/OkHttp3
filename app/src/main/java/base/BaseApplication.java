@@ -6,7 +6,7 @@ import android.util.Log;
 /**
  * Application
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class BaseApplication extends Application {
 

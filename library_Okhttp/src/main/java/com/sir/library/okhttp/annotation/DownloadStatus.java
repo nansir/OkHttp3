@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * 下载状态
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 @StringDef({DownloadStatus.INIT, DownloadStatus.DOWNLOADING, DownloadStatus.PAUSE, DownloadStatus.COMPLETED})
 @Retention(RetentionPolicy.SOURCE)

@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.sir.library.okhttp.HttpInfo;
 import com.sir.library.okhttp.OkHttpUtil;
-import com.sir.library.okhttp.callback.Callback;
+import com.sir.library.okhttp.callback.ResponseCallback;
 
 import java.io.IOException;
 
@@ -16,8 +16,7 @@ import base.view.LoadingDialog;
 
 /**
  * Activity基类：支持网络请求、加载提示框
- *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class HttpActivity extends AppCompatActivity implements BaseHandler.CallBack {
 
@@ -78,9 +77,9 @@ public class HttpActivity extends AppCompatActivity implements BaseHandler.CallB
      * @param info     请求信息体
      * @param callback 结果回调接口
      */
-    protected void doHttpAsync(HttpInfo info, final Callback callback) {
+    protected void doHttpAsync(HttpInfo info, final ResponseCallback callback) {
         getMainHandler().sendEmptyMessage(SHOW_DIALOG);
-        OkHttpUtil.getDefault(this).doAsync(info, new Callback() {
+        OkHttpUtil.getDefault(this).doAsync(info, new ResponseCallback() {
             @Override
             public void onSuccess(HttpInfo info) throws IOException {
                 getLoadingDialog().dismiss();
