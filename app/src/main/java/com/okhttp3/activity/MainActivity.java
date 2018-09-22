@@ -10,18 +10,18 @@ import com.okhttp3.bean.TimeAndDate;
 import com.okhttp3.util.LogUtil;
 import com.okhttp3.util.SelectorFactory;
 import com.okhttp3.util.ToastUtil;
-import com.okhttplib.HttpInfo;
-import com.okhttplib.OkHttpUtil;
-import com.okhttplib.annotation.CacheType;
-import com.okhttplib.annotation.Encoding;
-import com.okhttplib.annotation.RequestType;
-import com.okhttplib.callback.Callback;
+import com.sir.library.okhttp.HttpInfo;
+import com.sir.library.okhttp.OkHttpUtil;
+import com.sir.library.okhttp.annotation.CacheType;
+import com.sir.library.okhttp.annotation.Encoding;
+import com.sir.library.okhttp.annotation.RequestType;
+import com.sir.library.okhttp.callback.ResponseCallback;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import base.BaseActivity;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 import static android.graphics.Color.GRAY;
@@ -29,29 +29,29 @@ import static android.graphics.Color.GRAY;
 /**
  * 网络请求：支持同步/异步、GET/POST、缓存请求
  *
- * @author zhousf
+ * Created by zhuyinan on 2017/7/7.
  */
 public class MainActivity extends BaseActivity {
 
-    @Bind(R.id.fromCacheTV)
+    @BindView(R.id.fromCacheTV)
     TextView fromCacheTV;
-    @Bind(R.id.resultTV)
+    @BindView(R.id.resultTV)
     TextView resultTV;
-    @Bind(R.id.sync_btn)
+    @BindView(R.id.sync_btn)
     Button syncBtn;
-    @Bind(R.id.async_btn)
+    @BindView(R.id.async_btn)
     Button asyncBtn;
-    @Bind(R.id.force_network_btn)
+    @BindView(R.id.force_network_btn)
     Button forceNetworkBtn;
-    @Bind(R.id.force_cache_btn)
+    @BindView(R.id.force_cache_btn)
     Button forceCacheBtn;
-    @Bind(R.id.network_then_cache_btn)
+    @BindView(R.id.network_then_cache_btn)
     Button networkThenCacheBtn;
-    @Bind(R.id.cache_then_network_btn)
+    @BindView(R.id.cache_then_network_btn)
     Button cacheThenNetworkBtn;
-    @Bind(R.id.ten_second_cache_btn)
+    @BindView(R.id.ten_second_cache_btn)
     Button tenSecondCacheBtn;
-    @Bind(R.id.delete_cache_btn)
+    @BindView(R.id.delete_cache_btn)
     Button deleteCacheBtn;
     /**
      * 注意：测试时请更换该地址
@@ -60,11 +60,6 @@ public class MainActivity extends BaseActivity {
 //    private String url = "http://192.168.120.206:8080/office/api/time?key=zhousf_key";
 
     private boolean isNeedDeleteCache = true;
-
-    @Override
-    protected int initLayout() {
-        return R.layout.activity_main;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +79,11 @@ public class MainActivity extends BaseActivity {
                 .bind(cacheThenNetworkBtn)
                 .bind(tenSecondCacheBtn)
                 .bind(deleteCacheBtn);
+    }
+
+    @Override
+    protected int initLayout() {
+        return R.layout.activity_main;
     }
 
     @Override
@@ -173,13 +173,7 @@ public class MainActivity extends BaseActivity {
                         .addParam("param", "test")//添加接口参数
                         .setDelayExec(2, TimeUnit.SECONDS)//延迟2秒执行
                         .build(),
-                new Callback() {
-                    @Override
-                    public void onFailure(HttpInfo info) throws IOException {
-                        String result = info.getRetDetail();
-                        resultTV.setText("异步请求失败：" + result);
-                    }
-
+                new ResponseCallback() {
                     @Override
                     public void onSuccess(HttpInfo info) throws IOException {
                         String result = info.getRetDetail();
@@ -189,6 +183,14 @@ public class MainActivity extends BaseActivity {
                         LogUtil.d("MainActivity", time.getResult().toString());
                         setFromCacheTV(info);
                     }
+
+                    @Override
+                    public void onFailure(HttpInfo info) throws IOException {
+                        String result = info.getRetDetail();
+                        resultTV.setText("异步请求失败：" + result);
+                    }
+
+
                 });
         needDeleteCache(true);
     }
@@ -198,9 +200,8 @@ public class MainActivity extends BaseActivity {
      */
     private void forceNetwork() {
         OkHttpUtil.Builder().setCacheType(CacheType.FORCE_NETWORK).build(this)
-                .doGetAsync(
-                        HttpInfo.Builder().setUrl(url).build(),
-                        new Callback() {
+                .doGetAsync(HttpInfo.Builder().setUrl(url).build(),
+                        new ResponseCallback() {
                             @Override
                             public void onSuccess(HttpInfo info) throws IOException {
                                 String result = info.getRetDetail();
@@ -224,7 +225,7 @@ public class MainActivity extends BaseActivity {
         OkHttpUtil.Builder().setCacheType(CacheType.FORCE_CACHE).build(this)
                 .doGetAsync(
                         HttpInfo.Builder().setUrl(url).build(),
-                        new Callback() {
+                        new ResponseCallback() {
                             @Override
                             public void onSuccess(HttpInfo info) throws IOException {
                                 String result = info.getRetDetail();
@@ -248,7 +249,7 @@ public class MainActivity extends BaseActivity {
         OkHttpUtil.Builder().setCacheType(CacheType.NETWORK_THEN_CACHE).build(this)
                 .doGetAsync(
                         HttpInfo.Builder().setUrl(url).build(),
-                        new Callback() {
+                        new ResponseCallback() {
                             @Override
                             public void onSuccess(HttpInfo info) throws IOException {
                                 String result = info.getRetDetail();
@@ -272,7 +273,7 @@ public class MainActivity extends BaseActivity {
         OkHttpUtil.Builder().setCacheType(CacheType.CACHE_THEN_NETWORK).build(this)
                 .doGetAsync(
                         HttpInfo.Builder().setUrl(url).build(),
-                        new Callback() {
+                        new ResponseCallback() {
                             @Override
                             public void onSuccess(HttpInfo info) throws IOException {
                                 String result = info.getRetDetail();
@@ -304,7 +305,7 @@ public class MainActivity extends BaseActivity {
                 .build(this)
                 .doGetAsync(
                         HttpInfo.Builder().setUrl(url).build(),
-                        new Callback() {
+                        new ResponseCallback() {
                             @Override
                             public void onSuccess(HttpInfo info) throws IOException {
                                 String result = info.getRetDetail();
@@ -320,15 +321,6 @@ public class MainActivity extends BaseActivity {
                 );
     }
 
-
-    private void needDeleteCache(boolean delete) {
-        isNeedDeleteCache = delete;
-    }
-
-    private void setFromCacheTV(HttpInfo info) {
-        fromCacheTV.setText(info.isFromCache() ? "缓存请求" : "网络请求");
-    }
-
     /**
      * 清理缓存
      */
@@ -338,6 +330,14 @@ public class MainActivity extends BaseActivity {
         } else {
             ToastUtil.show(this, "清理缓存失败");
         }
+    }
+
+    private void setFromCacheTV(HttpInfo info) {
+        fromCacheTV.setText(info.isFromCache() ? "缓存请求" : "网络请求");
+    }
+
+    private void needDeleteCache(boolean delete) {
+        isNeedDeleteCache = delete;
     }
 
 

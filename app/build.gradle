@@ -1,10 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-
     compileSdkVersion COMPILE_SDK_VERSION
     buildToolsVersion BUILD_TOOLS_VERSION
-
 
     defaultConfig {
         applicationId "com.okhttp3"
@@ -25,18 +23,13 @@ android {
     lintOptions {
         abortOnError false
     }
-
 }
 
 dependencies {
-    compile project(':okhttp3')
-//    compile ('com.zhousf.lib:okhttp3:2.9.1.2'){
-//        exclude(module:'gson')
-//    }
-
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':library_Okhttp')
     compile libSupportAppcompat_v7
 
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.google.code.gson:gson:2.8.1'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }

@@ -21,11 +21,15 @@ public class SelectorFactory {
         return new ShapeSelector();
     }
 
-    public static final class ShapeSelector {
+    public static ColorSelector newColorSelector() {
+        return new ColorSelector();
+    }
 
-        @IntDef({GradientDrawable.RECTANGLE, GradientDrawable.OVAL,
-                GradientDrawable.LINE, GradientDrawable.RING})
-        private @interface Shape {}
+    public static GeneralSelector newGeneralSelector() {
+        return new GeneralSelector();
+    }
+
+    public static final class ShapeSelector {
 
         private int mShape;               //the shape of background
         private int mDefaultBgColor;      //default background color
@@ -40,17 +44,14 @@ public class SelectorFactory {
         private int mSelectedStrokeColor; //state_selected = true
         private int mFocusedStrokeColor;  //state_focused = true
         private int mCornerRadius;        //corner radius
-
         private boolean hasSetDisabledBgColor = false;
         private boolean hasSetPressedBgColor = false;
         private boolean hasSetSelectedBgColor = false;
         private boolean hasSetFocusedBgColor = false;
-
         private boolean hasSetDisabledStrokeColor = false;
         private boolean hasSetPressedStrokeColor = false;
         private boolean hasSetSelectedStrokeColor = false;
         private boolean hasSetFocusedStrokeColor = false;
-
         private ShapeSelector() {
             //initialize default values
             mShape = GradientDrawable.RECTANGLE;
@@ -157,6 +158,13 @@ public class SelectorFactory {
             return this;
         }
 
+        public ShapeSelector bind(View view) {
+            if (view == null)
+                return this;
+            view.setBackground(create());
+            return this;
+        }
+
         public StateListDrawable create() {
             StateListDrawable selector = new StateListDrawable();
 
@@ -196,13 +204,6 @@ public class SelectorFactory {
             return selector;
         }
 
-        public ShapeSelector bind(View view){
-            if(view == null)
-                return this;
-            view.setBackground(create());
-            return this;
-        }
-
         private GradientDrawable getItemShape(int shape, int cornerRadius,
                                               int solidColor, int strokeWidth, int strokeColor) {
             GradientDrawable drawable = new GradientDrawable();
@@ -212,10 +213,11 @@ public class SelectorFactory {
             drawable.setColor(solidColor);
             return drawable;
         }
-    }
 
-    public static ColorSelector newColorSelector() {
-        return new ColorSelector();
+        @IntDef({GradientDrawable.RECTANGLE, GradientDrawable.OVAL,
+                GradientDrawable.LINE, GradientDrawable.RING})
+        private @interface Shape {
+        }
     }
 
     public static final class ColorSelector {
@@ -276,6 +278,13 @@ public class SelectorFactory {
             return this;
         }
 
+        public ColorSelector bindHintTextColor(TextView view) {
+            if (view == null)
+                return this;
+            view.setHintTextColor(create());
+            return this;
+        }
+
         public ColorStateList create() {
             int[] colors = new int[]{
                     hasSetDisabledColor ? mDisabledColor : mDefaultColor,
@@ -293,24 +302,13 @@ public class SelectorFactory {
             return new ColorStateList(states, colors);
         }
 
-        public ColorSelector bindHintTextColor(TextView view){
-            if(view == null)
-                return this;
-            view.setHintTextColor(create());
-            return this;
-        }
-
-        public ColorSelector bindTextColor(TextView view){
-            if(view == null)
+        public ColorSelector bindTextColor(TextView view) {
+            if (view == null)
                 return this;
             view.setTextColor(create());
             return this;
         }
 
-    }
-
-    public static GeneralSelector newGeneralSelector() {
-        return new GeneralSelector();
     }
 
     public static final class GeneralSelector {
@@ -330,40 +328,10 @@ public class SelectorFactory {
             mDefaultDrawable = new ColorDrawable(Color.TRANSPARENT);
         }
 
-        public GeneralSelector setDefaultDrawable(Drawable drawable) {
-            mDefaultDrawable = drawable;
-            if (!hasSetDisabledDrawable)
-                mDisabledDrawable = drawable;
-            if (!hasSetPressedDrawable)
-                mPressedDrawable = drawable;
-            if (!hasSetSelectedDrawable)
-                mSelectedDrawable = drawable;
-            if (!hasSetFocusedDrawable)
-                mFocusedDrawable = drawable;
-            return this;
-        }
-
-        public GeneralSelector setDisabledDrawable(Drawable drawable) {
-            mDisabledDrawable = drawable;
-            hasSetDisabledDrawable = true;
-            return this;
-        }
-
-        public GeneralSelector setPressedDrawable(Drawable drawable) {
-            mPressedDrawable = drawable;
-            hasSetPressedDrawable = true;
-            return this;
-        }
-
-        public GeneralSelector setSelectedDrawable(Drawable drawable) {
-            mSelectedDrawable = drawable;
-            hasSetSelectedDrawable = true;
-            return this;
-        }
-
-        public GeneralSelector setFocusedDrawable(Drawable drawable) {
-            mFocusedDrawable = drawable;
-            hasSetFocusedDrawable = true;
+        public GeneralSelector bind(View view) {
+            if (view == null)
+                return this;
+            view.setBackground(create());
             return this;
         }
 
@@ -381,16 +349,22 @@ public class SelectorFactory {
             return selector;
         }
 
-        public GeneralSelector bind(View view){
-            if(view == null)
-                return this;
-            view.setBackground(create());
-            return this;
-        }
-
         //overload
         public GeneralSelector setDefaultDrawable(Context context, @DrawableRes int drawableRes) {
             return setDefaultDrawable(ContextCompat.getDrawable(context, drawableRes));
+        }
+
+        public GeneralSelector setDefaultDrawable(Drawable drawable) {
+            mDefaultDrawable = drawable;
+            if (!hasSetDisabledDrawable)
+                mDisabledDrawable = drawable;
+            if (!hasSetPressedDrawable)
+                mPressedDrawable = drawable;
+            if (!hasSetSelectedDrawable)
+                mSelectedDrawable = drawable;
+            if (!hasSetFocusedDrawable)
+                mFocusedDrawable = drawable;
+            return this;
         }
 
         //overload
@@ -398,9 +372,21 @@ public class SelectorFactory {
             return setDisabledDrawable(ContextCompat.getDrawable(context, drawableRes));
         }
 
+        public GeneralSelector setDisabledDrawable(Drawable drawable) {
+            mDisabledDrawable = drawable;
+            hasSetDisabledDrawable = true;
+            return this;
+        }
+
         //overload
         public GeneralSelector setPressedDrawable(Context context, @DrawableRes int drawableRes) {
             return setPressedDrawable(ContextCompat.getDrawable(context, drawableRes));
+        }
+
+        public GeneralSelector setPressedDrawable(Drawable drawable) {
+            mPressedDrawable = drawable;
+            hasSetPressedDrawable = true;
+            return this;
         }
 
         //overload
@@ -408,9 +394,21 @@ public class SelectorFactory {
             return setSelectedDrawable(ContextCompat.getDrawable(context, drawableRes));
         }
 
+        public GeneralSelector setSelectedDrawable(Drawable drawable) {
+            mSelectedDrawable = drawable;
+            hasSetSelectedDrawable = true;
+            return this;
+        }
+
         //overload
         public GeneralSelector setFocusedDrawable(Context context, @DrawableRes int drawableRes) {
             return setFocusedDrawable(ContextCompat.getDrawable(context, drawableRes));
+        }
+
+        public GeneralSelector setFocusedDrawable(Drawable drawable) {
+            mFocusedDrawable = drawable;
+            hasSetFocusedDrawable = true;
+            return this;
         }
     }
 }

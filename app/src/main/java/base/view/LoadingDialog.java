@@ -38,30 +38,30 @@ public class LoadingDialog extends Dialog {
 
     }
 
-    public LoadingDialog text(String text){
-        if(tv_load != null && !TextUtils.isEmpty(text)){
-            tv_load.setText(text);
-        }
-        return this;
-    }
-
     //显示对话框
-    public void showDialog(){
+    public void showDialog() {
         text("加载中");
-        if(null != pb_loading && pb_loading.getVisibility() != View.VISIBLE){
+        if (null != pb_loading && pb_loading.getVisibility() != View.VISIBLE) {
             pb_loading.setVisibility(View.VISIBLE);
         }
-        if(null != iv_load_result){
+        if (null != iv_load_result) {
             iv_load_result.setVisibility(View.GONE);
         }
         show();
     }
 
+    public LoadingDialog text(String text) {
+        if (tv_load != null && !TextUtils.isEmpty(text)) {
+            tv_load.setText(text);
+        }
+        return this;
+    }
+
     // 加载成功
     public void succeed() {
-        if(pb_loading != null)
+        if (pb_loading != null)
             pb_loading.setVisibility(View.GONE);
-        if(iv_load_result != null){
+        if (iv_load_result != null) {
             iv_load_result.setVisibility(View.VISIBLE);
             iv_load_result.setImageResource(R.mipmap.load_suc_icon);
         }
@@ -70,15 +70,14 @@ public class LoadingDialog extends Dialog {
 
     // 加载失败
     public void failed() {
-        if(pb_loading != null)
+        if (pb_loading != null)
             pb_loading.setVisibility(View.GONE);
-        if(iv_load_result != null){
+        if (iv_load_result != null) {
             iv_load_result.setVisibility(View.VISIBLE);
             iv_load_result.setImageResource(R.mipmap.load_fail_icon);
         }
         tv_load.setText("加载失败");
     }
-
 
 
 }

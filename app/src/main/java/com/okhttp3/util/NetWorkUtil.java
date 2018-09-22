@@ -7,7 +7,8 @@ import android.telephony.TelephonyManager;
 
 /**
  * 网络状态工具类
- * @author zhousf
+ *
+ * Created by zhuyinan on 2017/7/7.
  */
 public class NetWorkUtil {
 
@@ -41,7 +42,7 @@ public class NetWorkUtil {
                     || ni.getSubtype() == TelephonyManager.NETWORK_TYPE_EDGE
                     || ni.getSubtype() == TelephonyManager.NETWORK_TYPE_CDMA) {
                 return true;
-            }else {
+            } else {
                 return false;
             }
         }

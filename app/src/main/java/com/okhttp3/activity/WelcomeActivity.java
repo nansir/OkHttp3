@@ -9,33 +9,28 @@ import com.okhttp3.R;
 import com.okhttp3.util.SelectorFactory;
 
 import base.BaseActivity;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 import static android.graphics.Color.GRAY;
 
 /**
  * 欢迎页
- *
- * @author zhousf
+ * <p>
+ * Created by zhuyinan on 2017/7/7.
  */
 public class WelcomeActivity extends BaseActivity {
 
-    @Bind(R.id.httpBtn)
+    @BindView(R.id.httpBtn)
     Button httpBtn;
-    @Bind(R.id.uploadImgBtn)
+    @BindView(R.id.uploadImgBtn)
     Button uploadImgBtn;
-    @Bind(R.id.uploadFileBtn)
+    @BindView(R.id.uploadFileBtn)
     Button uploadFileBtn;
-    @Bind(R.id.downloadBtn)
+    @BindView(R.id.downloadBtn)
     Button downloadBtn;
-    @Bind(R.id.downloadPointBtn)
+    @BindView(R.id.downloadPointBtn)
     Button downloadPointBtn;
-
-    @Override
-    protected int initLayout() {
-        return R.layout.activity_welcome;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +47,11 @@ public class WelcomeActivity extends BaseActivity {
                 .bind(uploadFileBtn)
                 .bind(downloadBtn)
                 .bind(downloadPointBtn);
+    }
+
+    @Override
+    protected int initLayout() {
+        return R.layout.activity_welcome;
     }
 
     @OnClick({R.id.httpBtn, R.id.uploadImgBtn, R.id.uploadFileBtn, R.id.downloadBtn, R.id.downloadPointBtn})

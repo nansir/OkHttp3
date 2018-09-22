@@ -9,12 +9,12 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.okhttplib.OkHttpUtil;
-import com.okhttplib.annotation.CacheType;
-import com.okhttplib.annotation.Encoding;
-import com.okhttplib.cookie.PersistentCookieJar;
-import com.okhttplib.cookie.cache.SetCookieCache;
-import com.okhttplib.cookie.persistence.SharedPrefsCookiePersistor;
+import com.sir.library.okhttp.OkHttpUtil;
+import com.sir.library.okhttp.annotation.CacheType;
+import com.sir.library.okhttp.annotation.Encoding;
+import com.sir.library.okhttp.cookie.PersistentCookieJar;
+import com.sir.library.okhttp.cookie.cache.SetCookieCache;
+import com.sir.library.okhttp.cookie.persistence.SharedPrefsCookiePersistor;
 
 import java.io.File;
 
@@ -35,9 +35,9 @@ public class BaseProvider extends ContentProvider {
     /**
      * 初始化网络请求框架
      */
-    void initOkHttp(Context context){
-        String downloadFileDir = Environment.getExternalStorageDirectory().getPath()+"/okHttp_download/";
-        String cacheDir = Environment.getExternalStorageDirectory().getPath()+"/okHttp_cache";
+    void initOkHttp(Context context) {
+        String downloadFileDir = Environment.getExternalStorageDirectory().getPath() + "/okHttp_download/";
+        String cacheDir = Environment.getExternalStorageDirectory().getPath() + "/okHttp_cache";
         OkHttpUtil.init(context)
                 .setConnectTimeout(15)//连接超时时间
                 .setWriteTimeout(15)//写超时时间
@@ -53,13 +53,12 @@ public class BaseProvider extends ContentProvider {
                 .setDownloadFileDir(downloadFileDir)//文件下载保存目录
                 .setResponseEncoding(Encoding.UTF_8)//设置全局的服务器响应编码
                 .setRequestEncoding(Encoding.UTF_8)//设置全局的请求参数编码
-                .addResultInterceptor(HttpInterceptor.ResultInterceptor)//请求结果拦截器
-                .addExceptionInterceptor(HttpInterceptor.ExceptionInterceptor)//请求链路异常拦截器
+                .addResultInterceptor(HttpInterceptor.resultInterceptor)//请求结果拦截器
+                .addExceptionInterceptor(HttpInterceptor.exceptionInterceptor)//请求链路异常拦截器
                 .setCookieJar(new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context)))//持久化cookie
                 .build();
-        Log.d("BaseProvider","OkHttp已初始化");
+        Log.i("BaseProvider", "OkHttp已初始化");
     }
-
 
 
     @Nullable
